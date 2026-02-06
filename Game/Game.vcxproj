@@ -93,6 +93,8 @@
     <ClCompile Include="Actor\Bullet.cpp" />
     <ClCompile Include="Actor\BulletSpawner.cpp" />
     <ClCompile Include="Actor\HomingBullet.cpp" />
+    <ClCompile Include="Actor\Item.cpp" />
+    <ClCompile Include="Actor\ItemSpawner.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Level\GameLevel.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -102,6 +104,8 @@
     <ClInclude Include="Actor\Bullet.h" />
     <ClInclude Include="Actor\BulletSpawner.h" />
     <ClInclude Include="Actor\HomingBullet.h" />
+    <ClInclude Include="Actor\Item.h" />
+    <ClInclude Include="Actor\ItemSpawner.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Level\GameLevel.h" />
     <ClInclude Include="Util\Timer.h" />

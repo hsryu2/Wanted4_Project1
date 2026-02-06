@@ -14,6 +14,11 @@ public:
 	Player();
 	~Player();
 
+	static Player& Get();
+
+	void SetResistanceColor();
+	void SetOriginalColor();
+
 private:
 	virtual void Tick(float deltaTime) override;
 
@@ -29,7 +34,8 @@ private:
 	// 아래로 이동하는 함수.
 	void MoveDown(float deltaTime);
 
-	static Player& Get();
+	
+	
 
 	//inline Vector2 GetPosition() { return position; }
 	

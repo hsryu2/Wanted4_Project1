@@ -3,6 +3,7 @@
 #include "Engine/Engine.h"
 #include "Level/Level.h"
 #include "Render/Renderer.h"
+#include "Level/GameLevel.h"
 
 #include <iostream>
 
@@ -12,7 +13,7 @@ Player::Player()
 	: super("●", Vector2::Zero, Color::Green)
 {
 	instance = this;
-
+	sortingOrder = 10;
 	// 생성 위치 설정.
 	int xPosition = (Engine::Get().GetWidth() / 2) - (width / 2);
 	int yPosition = (Engine::Get().GetHeight() / 2);
@@ -134,4 +135,15 @@ Player& Player::Get()
 	}
 
 	return *instance;
+}
+
+void Player::SetResistanceColor()
+{	
+	this->color = Color::YELLOW;
+	
+}
+
+void Player::SetOriginalColor()
+{
+	this->color = Color::Green;
 }

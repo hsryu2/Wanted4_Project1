@@ -4,6 +4,11 @@
 #include "Render/Renderer.h"
 #include "Engine/Engine.h"
 #include "Actor/BulletSpawner.h"
+#include "Actor/HomingBullet.h"
+#include "Actor/ItemSpawner.h"
+#include "Actor/Item.h"
+
+#include <iostream>
 
 GameLevel::GameLevel()
 {
@@ -11,11 +16,36 @@ GameLevel::GameLevel()
 	AddNewActor(new Player());
 
 	AddNewActor(new BulletSpawner());
-
+	
+	AddNewActor(new ItemSpawner());
 }
 
 GameLevel::~GameLevel()
 {
+}
+
+void GameLevel::PlayerResistance(float deltaTime)
+{
+	isPlayerResistance = true;
+	timer.Reset();
+	timer.SetTargetTime(3.0f);
+
+	Player::Get().SetResistanceColor();
+}
+
+void GameLevel::TickResistance(float deltaTime)
+{
+	if (isPlayerResistance)
+	{
+		timer.Tick(deltaTime);
+		if (timer.IsTimeOut())
+		{
+			isPlayerResistance = false;
+			Player::Get().SetOriginalColor();
+			timer.Reset();
+		}
+
+	}
 }
 
 void GameLevel::Tick(float deltaTime)
@@ -28,6 +58,9 @@ void GameLevel::Tick(float deltaTime)
 
 	// 충돌 판정 처리.
 	ProcessCollisionPlayerAndEnemyBullet();
+	ProcessCollisionPlayerAndItem(deltaTime);
+
+	TickResistance(deltaTime);
 }
 
 void GameLevel::Draw()
@@ -72,7 +105,7 @@ void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
 			continue;
 		}
 
-		if (actor->IsTypeOf<Bullet>())
+		if (actor->IsTypeOf<Bullet>() || actor->IsTypeOf<HomingBullet>())
 		{
 			bullets.emplace_back(actor);
 		}
@@ -87,7 +120,7 @@ void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
 	// 충돌 판정.
 	for (Actor* const bullet : bullets)
 	{
-		if (bullet->TestIntersect(player))
+		if (bullet->TestIntersect(player) && isPlayerResistance == false)
 		{
 			// 플레이어 죽음 설정.
 			isPlayerDead = true;
@@ -98,6 +131,64 @@ void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
 			// 액터 제거 처리.
 			player->Destroy();
 			bullet->Destroy();
+			break;
+		}
+	}
+}
+
+void GameLevel::ProcessCollisionPlayerAndItem(float deltaTime)
+{
+	// 액터 필터링을 위한 변수.
+	Player* player = nullptr;
+	std::vector<Actor*> items;
+
+	// 액터 필터링.
+	for (Actor* const actor : actors)
+	{
+		if (!player && actor->IsTypeOf<Player>())
+		{
+			player = actor->As<Player>();
+			continue;
+		}
+
+		if (actor->IsTypeOf<Item>())
+		{
+			items.emplace_back(actor);
+		}
+	}
+
+	// 판정 처리 안해도 되는지 확인.
+	if (items.size() == 0 || !player)
+	{
+		return;
+	}
+
+	// 충돌 판정.
+	for (Actor* const item : items)
+	{
+		if (item->TestIntersect(player))
+		{
+			// 액터 제거 처리.
+			Item* collidedItem = item->As<Item>();
+
+			if (collidedItem != nullptr)
+			{
+				int t = collidedItem->GetItemType();
+				switch (t) {
+				case 0:
+					PlayerResistance(deltaTime);
+					break;
+				case 1:
+
+					break;
+				case 2:
+					break;
+
+				}
+				
+			}
+			item->Destroy();
+		
 			break;
 		}
 	}

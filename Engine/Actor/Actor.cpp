@@ -122,4 +122,12 @@ namespace Wanted
 		// 새로운 위치 설정.
 		position = newPosition;
 	}
+
+	void Actor::Setimage(const char* newimage)
+	{
+		size_t length = strlen(newimage) + 1;
+		this->image = new char[length];
+		strcpy_s(this->image, length, newimage);
+		
+	}
 }

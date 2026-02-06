@@ -50,6 +50,8 @@ namespace Wanted
 		inline void SetOwner(Level* newOwner) { owner = newOwner; }
 		inline Level* GetOwner() const { return owner; }
 
+		void Setimage(const char* image);
+
 		// Getter.
 		inline bool HasBeganPlay() const
 		{

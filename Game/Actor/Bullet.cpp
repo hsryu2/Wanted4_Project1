@@ -8,6 +8,7 @@ Bullet::Bullet(Vector2& position, float speed,float yPosition, float xPosition)
 			
 
 {
+	sortingOrder = 1;
 	SetPosition(position);
 }
 
@@ -56,7 +57,7 @@ void Bullet::Tick(float deltaTime)
 		position.x = static_cast<int>(xPosition);
 	}
 
-
+	// 탄환이 콘솔 사이즈 끝에 도달 시 파괴
 	if (position.x > Engine::Get().GetWidth())
 	{
 		Destroy();

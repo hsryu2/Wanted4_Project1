@@ -9,8 +9,8 @@
 
 BulletSpawner::BulletSpawner()
 {
-	timer.SetTargetTime(Util::RandomRange(0.1f, 0.2f));
-	HomingTimer.SetTargetTime(30.0f);
+	timer.SetTargetTime(Util::RandomRange(0.2f, 0.5f));
+	HomingTimer.SetTargetTime(10.0f);
 }
 
 BulletSpawner::~BulletSpawner()
@@ -43,7 +43,11 @@ void BulletSpawner::spawnBullet(float deltaTime)
 	Vector2 bulletPosition(xPosition, yPosition);
 
 	GetOwner()->AddNewActor(
-		new Bullet(bulletPosition, bulletSpeed, static_cast<float>(position.y), static_cast<float>(position.x)));
+		new Bullet(
+			bulletPosition,
+			bulletSpeed,
+			static_cast<float>(position.y),
+			static_cast<float>(position.x)));
 }
 
 void BulletSpawner::spawnHomingBullet(float deltaTime)
@@ -58,12 +62,13 @@ void BulletSpawner::spawnHomingBullet(float deltaTime)
 
 	spawnPosition();
 
-	bulletSpeed = 8.0f;
+	bulletSpeed = 15.0f;
 
 	Vector2 bulletPosition(xPosition, yPosition);
 
 	GetOwner()->AddNewActor(
-		new HomingBullet(bulletPosition,
+		new HomingBullet(
+			bulletPosition,
 			bulletSpeed,
 			static_cast<float>(position.y),
 			static_cast<float>(position.x)));
