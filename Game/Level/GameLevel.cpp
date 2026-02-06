@@ -1,0 +1,124 @@
+#include "GameLevel.h"
+#include "Actor/Player.h"
+#include "Actor/Bullet.h"
+#include "Render/Renderer.h"
+#include "Engine/Engine.h"
+#include "Actor/BulletSpawner.h"
+
+GameLevel::GameLevel()
+{
+	// Player 액터 추가.
+	AddNewActor(new Player());
+
+	AddNewActor(new BulletSpawner());
+
+}
+
+GameLevel::~GameLevel()
+{
+}
+
+void GameLevel::Tick(float deltaTime)
+{
+	super::Tick(deltaTime);
+
+
+	// 1초당 점수 추가.
+	Score(deltaTime);
+
+	// 충돌 판정 처리.
+	ProcessCollisionPlayerAndEnemyBullet();
+}
+
+void GameLevel::Draw()
+{
+	super::Draw();
+
+	if (isPlayerDead)
+	{
+		// 플레이어 죽음 메시지 Renderer에 제출.
+		Renderer::Get().Submit("!Dead!", playerDeadPosition);
+
+		// 점수 보여주기.
+		ShowScore();
+
+		// 화면에 바로 표시.
+		Renderer::Get().PresentImmediately();
+
+		// 프로그램 정지.
+		Sleep(2000);
+
+		// 게임 종료.
+		Engine::Get().QuitEngine();
+	}
+
+	// 점수 보여주기.
+	ShowScore();
+}
+
+
+void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
+{
+	// 액터 필터링을 위한 변수.
+	Player* player = nullptr;
+	std::vector<Actor*> bullets;
+
+	// 액터 필터링.
+	for (Actor* const actor : actors)
+	{
+		if (!player && actor->IsTypeOf<Player>())
+		{
+			player = actor->As<Player>();
+			continue;
+		}
+
+		if (actor->IsTypeOf<Bullet>())
+		{
+			bullets.emplace_back(actor);
+		}
+	}
+
+	// 판정 처리 안해도 되는지 확인.
+	if (bullets.size() == 0 || !player)
+	{
+		return;
+	}
+
+	// 충돌 판정.
+	for (Actor* const bullet : bullets)
+	{
+		if (bullet->TestIntersect(player))
+		{
+			// 플레이어 죽음 설정.
+			isPlayerDead = true;
+
+			// 죽은 위치 저장.
+			playerDeadPosition = player->GetPosition();
+
+			// 액터 제거 처리.
+			player->Destroy();
+			bullet->Destroy();
+			break;
+		}
+	}
+}
+
+void GameLevel::ShowScore()
+{
+	sprintf_s(scoreString, 128, "Score: %d", score);
+	Renderer::Get().Submit(
+		scoreString,
+		Vector2(0, Engine::Get().GetHeight() - 1)
+	);
+}
+
+void GameLevel::Score(float deltaTime)
+{
+	scoreAccumulator += deltaTime;
+
+	if (scoreAccumulator >= 1.0f)
+	{
+		score += 1;
+		scoreAccumulator = 0.0f;
+	}
+}
