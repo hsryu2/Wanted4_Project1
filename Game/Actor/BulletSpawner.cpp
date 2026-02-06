@@ -6,9 +6,14 @@
 #include "Actor/HomingBullet.h"
 #include "Actor/Player.h"
 
+#include <iostream>
+
+BulletSpawner* BulletSpawner::instance = nullptr;
 
 BulletSpawner::BulletSpawner()
 {
+	instance = this;
+
 	timer.SetTargetTime(Util::RandomRange(0.2f, 0.5f));
 	HomingTimer.SetTargetTime(10.0f);
 }
@@ -17,7 +22,31 @@ BulletSpawner::~BulletSpawner()
 {
 }
 
-void BulletSpawner::Tick(float deltaTime)
+BulletSpawner& BulletSpawner::Get() {
+	
+	if (!instance) {
+		
+		std::cout << "Error : BulletSpawner instance is null";
+		__debugbreak();
+	}
+
+	return *instance;
+}
+
+void BulletSpawner::find(Actor* bullet)
+{
+	// 리스트를 돌면서 넘겨받은 주소(bullet)와 일치하는 녀석을 찾습니다.
+	for (auto it = activeBullets.begin(); it != activeBullets.end(); ++it)
+	{
+		if (*it == bullet)
+		{
+			activeBullets.erase(it); // 찾으면 리스트에서 삭제
+			return; // 찾았으니 함수 종료
+		}
+	}
+}
+
+void BulletSpawner::Tick(float deltaTime) //
 {
 	super::Tick(deltaTime);
 
@@ -25,7 +54,7 @@ void BulletSpawner::Tick(float deltaTime)
 	spawnHomingBullet(deltaTime);
 }
 
-void BulletSpawner::spawnBullet(float deltaTime)
+void BulletSpawner::spawnBullet(float deltaTime) // 일반 탄환 생성
 {
 	timer.Tick(deltaTime);
 
@@ -42,15 +71,16 @@ void BulletSpawner::spawnBullet(float deltaTime)
 
 	Vector2 bulletPosition(xPosition, yPosition);
 
-	GetOwner()->AddNewActor(
-		new Bullet(
-			bulletPosition,
-			bulletSpeed,
-			static_cast<float>(position.y),
-			static_cast<float>(position.x)));
+	Bullet* newBullet = new Bullet(
+		bulletPosition,
+		bulletSpeed,
+		static_cast<float>(position.y),
+		static_cast<float>(position.x));
+	GetOwner()->AddNewActor(newBullet);
+	activeBullets.emplace_back(newBullet);
 }
 
-void BulletSpawner::spawnHomingBullet(float deltaTime)
+void BulletSpawner::spawnHomingBullet(float deltaTime) // 유도탄 생성
 {
 	HomingTimer.Tick(deltaTime);
 
@@ -66,12 +96,15 @@ void BulletSpawner::spawnHomingBullet(float deltaTime)
 
 	Vector2 bulletPosition(xPosition, yPosition);
 
-	GetOwner()->AddNewActor(
-		new HomingBullet(
-			bulletPosition,
-			bulletSpeed,
-			static_cast<float>(position.y),
-			static_cast<float>(position.x)));
+
+	HomingBullet* newBullet = new HomingBullet(
+		bulletPosition,
+		bulletSpeed,
+		static_cast<float>(position.y),
+		static_cast<float>(position.x));
+	GetOwner()->AddNewActor(newBullet);
+	activeBullets.emplace_back(newBullet);
+
 }
 
 void BulletSpawner::spawnPosition()
@@ -102,3 +135,15 @@ void BulletSpawner::spawnPosition()
 
 	}
 }
+
+void BulletSpawner::ClearBullet()
+{
+	for (Actor* bullet : activeBullets)
+	{
+		bullet->Destroy();
+	}
+
+	activeBullets.clear();
+}
+
+

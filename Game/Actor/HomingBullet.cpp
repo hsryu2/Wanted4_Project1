@@ -13,6 +13,7 @@ HomingBullet::HomingBullet(Vector2& position, float speed, float yPosition, floa
 	this->speed = speed;
 	this->xPosition = static_cast<float>(this->position.x);
 	this->yPosition = static_cast<float>(this->position.y);
+
 	SetPosition(position);
 }
 

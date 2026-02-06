@@ -4,8 +4,6 @@
 
 using namespace Wanted;
 
-
-
 class Item : public Actor
 {
 	RTTI_DECLARATIONS(Item, Actor)

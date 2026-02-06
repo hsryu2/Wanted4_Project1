@@ -34,7 +34,7 @@ private:
 
 	void Score(float deltaTime);
 
-	
+	void ClearAllBullet();
 
 private:
 	// 점수 변수.
@@ -52,6 +52,8 @@ private:
 
 	// 점수 문자열.
 	char scoreString[128] = {};
+
+	
 
 	Timer timer;
 };

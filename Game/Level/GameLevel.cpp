@@ -18,6 +18,7 @@ GameLevel::GameLevel()
 	AddNewActor(new BulletSpawner());
 	
 	AddNewActor(new ItemSpawner());
+
 }
 
 GameLevel::~GameLevel()
@@ -60,6 +61,7 @@ void GameLevel::Tick(float deltaTime)
 	ProcessCollisionPlayerAndEnemyBullet();
 	ProcessCollisionPlayerAndItem(deltaTime);
 
+	// 무적 아이템 타이머
 	TickResistance(deltaTime);
 }
 
@@ -168,20 +170,24 @@ void GameLevel::ProcessCollisionPlayerAndItem(float deltaTime)
 	{
 		if (item->TestIntersect(player))
 		{
-			// 액터 제거 처리.
+			// 액터 제거 처리 및 아이템 효과 적용.
 			Item* collidedItem = item->As<Item>();
 
 			if (collidedItem != nullptr)
 			{
 				int t = collidedItem->GetItemType();
 				switch (t) {
-				case 0:
+
+				case 0: // 무적
 					PlayerResistance(deltaTime);
 					break;
-				case 1:
 
+				case 1: // 화면에 있는 모든 탄환 제거
+					BulletSpawner::Get().ClearBullet();
 					break;
-				case 2:
+
+				case 2: // 화면에 있는 모든 총알 멈추기.
+
 					break;
 
 				}
@@ -212,4 +218,9 @@ void GameLevel::Score(float deltaTime)
 		score += 1;
 		scoreAccumulator = 0.0f;
 	}
+}
+
+void GameLevel::ClearAllBullet()
+{
+
 }

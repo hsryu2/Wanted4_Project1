@@ -36,7 +36,7 @@ void ItemSpawner::SpawnItem(float deltaTime)
 	ItemSpawnPosition();
 	
 	int itemtype = 0;
-	itemtype = Util::Random(0, 0);
+	itemtype = Util::Random(1, 1);
 
 	Vector2 ItemPos(xPosition, yPosition);
 	GetOwner()->AddNewActor(new Item(ItemPos, xPosition, yPosition, itemtype));

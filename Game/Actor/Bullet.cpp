@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "Engine/Engine.h"
+#include "Actor/BulletSpawner.h"
 
 Bullet::Bullet(Vector2& position, float speed,float yPosition, float xPosition)
 	:super("*", position, Color::Red),
@@ -14,6 +15,7 @@ Bullet::Bullet(Vector2& position, float speed,float yPosition, float xPosition)
 
 Bullet::~Bullet()
 {
+	BulletSpawner::Get().find(this);
 }
 
 void Bullet::Tick(float deltaTime)

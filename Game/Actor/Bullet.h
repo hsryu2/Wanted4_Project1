@@ -7,13 +7,6 @@ class Bullet : public Actor
 {
 	RTTI_DECLARATIONS(Bullet, Actor)
 
-	enum class MoveDirection
-	{
-		None = -1,
-		Straight,
-		Homing
-	};
-
 public:
 	Bullet(Vector2& position, float speed, float yPosition, float xPosition);
 	~Bullet();
@@ -24,14 +17,7 @@ private:
 protected:
 
 
-	//void FireLeft(float deltaTime);
-	//void FireRight(float deltaTime);
-	//void FireUp(float deltaTime);
-	//void FireDown(float deltaTime);
-
-	//MoveDirection direction = MoveDirection::None;
-
-	float speed = 3.0f;
+	float speed = 0.0f;
 
 	float yPosition = 0.0f;
 	float xPosition = 0.0f;
