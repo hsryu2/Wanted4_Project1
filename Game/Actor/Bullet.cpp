@@ -2,15 +2,16 @@
 #include "Engine/Engine.h"
 #include "Actor/BulletSpawner.h"
 
-Bullet::Bullet(Vector2& position, float speed,float yPosition, float xPosition)
+Bullet::Bullet(Vector2& position, float speed,float yPosition, float xPosition, int direction)
 	:super("*", position, Color::Red),
 			speed(speed), yPosition(static_cast<float>(position.y)),
 			xPosition(static_cast<float>(position.x))
 			
-
 {
+	this->direction = direction;
 	sortingOrder = 1;
 	SetPosition(position);
+	SetDirection();
 }
 
 Bullet::~Bullet()
@@ -22,42 +23,13 @@ void Bullet::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	if (DirX == 0 && DirY == 0)
-	{
-		// 위쪽
-		if (position.x > 0 && position.y == 0) { DirX = 0; DirY = 1; }
-		// 아래쪽
-		else if (position.x > 0 && position.y == Engine::Get().GetHeight() - 1) { DirX = 0; DirY = -1; }
-		// 왼쪽
-		else if (position.x == 0 && position.y > 0) { DirX = 1; DirY = 0; }
-		// 오른쪽
-		else if (position.x == Engine::Get().GetWidth() - 2 && position.y > 0) { DirX = -1; DirY = 0; }
-	}
 
-	// 위에서 아래로 쏘기.
-	if (DirX == 0 && DirY == 1)
-	{
-		yPosition = yPosition + speed * deltaTime;
-		position.y = static_cast<int>(yPosition);
-	}
-	// 아래에서 위로 쏘기.
-	else if (DirX == 0 && DirY == -1)
-	{
-		yPosition = yPosition - speed * deltaTime;
-		position.y = static_cast<int>(yPosition);
-	}
-	// 왼쪽에서 오른쪽으로 쏘기.
-	else if (DirX == 1 && DirY == 0)
-	{
-		xPosition = xPosition + speed * deltaTime * 1.4f;
-		position.x = static_cast<int>(xPosition);
-	}
-	// 오른쪽에서 왼쪽으로 쏘기.
-	else if (DirX == -1 && DirY == 0)
-	{
-		xPosition = xPosition - speed * deltaTime * 1.4f;
-		position.x = static_cast<int>(xPosition);
-	}
+	xPosition += static_cast<float>(DirX) * speed * deltaTime;
+	yPosition += static_cast<float>(DirY) * speed * deltaTime;
+
+	position.x = static_cast<int>(xPosition);
+	position.y = static_cast<int>(yPosition);
+
 
 	// 탄환이 콘솔 사이즈 끝에 도달 시 파괴
 	if (position.x > Engine::Get().GetWidth())
@@ -84,23 +56,31 @@ void Bullet::Tick(float deltaTime)
 	SetPosition(position);
 }
 
-//void Bullet::FireLeft(float deltaTime)
-//{
-//
-//}
-//
-//void Bullet::FireRight(float deltaTime)
-//{
-//}
-//
-//void Bullet::FireUp(float deltaTime)
-//{
-//
-//}
-//
-////탄환이 위쪽에서 스폰 됐을 때 쏘는 방향 = 아래 직선
-//void Bullet::FireDown(float deltaTime)
-//{
-//
-//}
+void Bullet::SetDirection()
+{
+	if (DirX == 0 && DirY == 0)
+	{
+		if (direction == 1) // 대각선 모드일 때
+		{
+			// 1. 가로 방향(DirX) 결정: 왼쪽 벽이면 오른쪽(1), 오른쪽 벽이면 왼쪽(-1)
+			if (position.x <= 0) DirX = 1;
+			else if (position.x >= Engine::Get().GetWidth() - 2) DirX = -1;
+			else DirX = (position.x < Engine::Get().GetWidth() / 2) ? 1 : -1; // 중간쯤이면 가까운 쪽 반대로
+
+			// 2. 세로 방향(DirY) 결정: 위쪽 벽이면 아래(1), 아래쪽 벽이면 위(-1)
+			if (position.y <= 0) DirY = 1;
+			else if (position.y >= Engine::Get().GetHeight() - 1) DirY = -1;
+			else DirY = (position.y < Engine::Get().GetHeight() / 2) ? 1 : -1;
+		}
+		// 위쪽
+		else if (position.x > 0 && position.y == 0) { DirX = 0; DirY = 1;}
+		// 아래쪽
+		else if (position.x > 0 && position.y == Engine::Get().GetHeight() - 1) { DirX = 0; DirY = -1 ;}
+		// 왼쪽
+		else if (position.x == 0 && position.y > 0) { DirX = 1; DirY = 0; }
+		// 오른쪽
+		else if (position.x == Engine::Get().GetWidth() - 2 && position.y > 0) { DirX = -1; DirY = 0; }
+	}
+}
+
 

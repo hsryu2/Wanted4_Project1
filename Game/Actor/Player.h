@@ -45,6 +45,7 @@ private:
 	Timer timer;
 
 	float moveSpeed = 40.0f;
+	float SlowMoveSpeed = 20.0f;
 
 	float xf = 0.0f;
 

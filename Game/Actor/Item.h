@@ -15,8 +15,12 @@ public:
 	
 	int GetItemType();
 
+	
+
 private:
 	virtual void Tick(float deltaTime) override;
+
+	void SetColor();
 
 	int xPosition = 0;
 	int yPosition = 0;

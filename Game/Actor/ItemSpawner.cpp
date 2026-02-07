@@ -8,7 +8,7 @@
 
 ItemSpawner::ItemSpawner()
 {
-	timer.SetTargetTime(Util::RandomRange(1.0f, 2.0f));
+	timer.SetTargetTime(Util::RandomRange(8.0f, 12.0f));
 
 }
 
@@ -36,7 +36,7 @@ void ItemSpawner::SpawnItem(float deltaTime)
 	ItemSpawnPosition();
 	
 	int itemtype = 0;
-	itemtype = Util::Random(1, 1);
+	itemtype = Util::Random(0, 1);
 
 	Vector2 ItemPos(xPosition, yPosition);
 	GetOwner()->AddNewActor(new Item(ItemPos, xPosition, yPosition, itemtype));

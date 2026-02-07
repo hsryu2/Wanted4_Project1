@@ -2,7 +2,7 @@
 #include "Actor/Player.h"
 
 HomingBullet::HomingBullet(Vector2& position, float speed, float yPosition, float xPosition)
-	: Bullet(position, speed, yPosition, xPosition)
+	: Bullet(position, speed, yPosition, xPosition, direction)
 
 {	// 유도탄 이미지, 색 설정.
 

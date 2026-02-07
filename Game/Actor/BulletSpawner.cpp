@@ -14,8 +14,8 @@ BulletSpawner::BulletSpawner()
 {
 	instance = this;
 
-	timer.SetTargetTime(Util::RandomRange(0.2f, 0.5f));
-	HomingTimer.SetTargetTime(10.0f);
+	timer.SetTargetTime(Util::RandomRange(0.1f, 0.3f));
+	HomingTimer.SetTargetTime(8.0f);
 }
 
 BulletSpawner::~BulletSpawner()
@@ -35,6 +35,10 @@ BulletSpawner& BulletSpawner::Get() {
 
 void BulletSpawner::find(Actor* bullet)
 {
+	if (activeBullets.empty())
+	{
+		return;
+	}
 	// 리스트를 돌면서 넘겨받은 주소(bullet)와 일치하는 녀석을 찾습니다.
 	for (auto it = activeBullets.begin(); it != activeBullets.end(); ++it)
 	{
@@ -68,14 +72,15 @@ void BulletSpawner::spawnBullet(float deltaTime) // 일반 탄환 생성
 	spawnPosition();
 
 	bulletSpeed = Util::RandomRange(10.0f, 15.0f);
-
+	int SetDirection = Util::Random(0, 1);
 	Vector2 bulletPosition(xPosition, yPosition);
 
 	Bullet* newBullet = new Bullet(
 		bulletPosition,
 		bulletSpeed,
 		static_cast<float>(position.y),
-		static_cast<float>(position.x));
+		static_cast<float>(position.x),
+		SetDirection);
 	GetOwner()->AddNewActor(newBullet);
 	activeBullets.emplace_back(newBullet);
 }

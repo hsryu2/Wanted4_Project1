@@ -187,7 +187,7 @@ void GameLevel::ProcessCollisionPlayerAndItem(float deltaTime)
 					break;
 
 				case 2: // 화면에 있는 모든 총알 멈추기.
-
+					
 					break;
 
 				}

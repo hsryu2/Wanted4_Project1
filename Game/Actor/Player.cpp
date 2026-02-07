@@ -62,14 +62,25 @@ void Player::Tick(float deltaTime)
 	{
 		MoveDown(deltaTime);
 	}
+
 }
 
 
 // 이동속도는 float으로 계산하고, 
 // 좌표 검사 이후 형변환을 통해 실제 좌표 넣기.
+// Space키를 누른채로 움직이면 느리게
 void Player::MoveRight(float deltaTime)
-{
-	xf += moveSpeed * deltaTime;
+{	
+
+	if (Input::Get().GetKey(VK_SPACE))
+	{
+		xf += SlowMoveSpeed * deltaTime;
+	}
+	else
+	{
+		xf += moveSpeed * deltaTime;
+	}
+	
 
 	// 좌표 검사.
 	if (xf + width > static_cast<float>(Engine::Get().GetWidth()))
@@ -83,7 +94,14 @@ void Player::MoveRight(float deltaTime)
 void Player::MoveLeft(float deltaTime)
 {
 
-	xf -= moveSpeed * deltaTime;
+	if (Input::Get().GetKey(VK_SPACE))
+	{
+		xf -= SlowMoveSpeed * deltaTime;
+	}
+	else 
+	{
+		xf -= moveSpeed * deltaTime;
+	}
 
 	// 왼쪽 이동 처리.
 	//position.x -= 1;
@@ -98,8 +116,14 @@ void Player::MoveLeft(float deltaTime)
 
 void Player::MoveUp(float deltaTime)
 {
-
-	yf -= moveSpeed * deltaTime;
+	if (Input::Get().GetKey(VK_SPACE))
+	{
+		yf -= SlowMoveSpeed * deltaTime;
+	}
+	else
+	{
+		yf -= moveSpeed * deltaTime;
+	}
 	// 위쪽 이동 처리.
 	//position.y -= 1;
 
@@ -114,8 +138,15 @@ void Player::MoveDown(float deltaTime)
 {	
 
 	// 아래쪽 이동 처리.
-	//position.y += 1;
-	yf += moveSpeed * deltaTime;
+
+	if (Input::Get().GetKey(VK_SPACE))
+	{
+		yf += SlowMoveSpeed * deltaTime;
+	}
+	else
+	{
+		yf += moveSpeed * deltaTime;
+	}
 
 	if (yf >= static_cast<float>(Engine::Get().GetHeight()))
 	{
@@ -124,6 +155,8 @@ void Player::MoveDown(float deltaTime)
 	position.y = static_cast<int>(yf);
 
 }
+
+
 
 Player& Player::Get()
 {

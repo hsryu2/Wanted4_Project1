@@ -2,9 +2,11 @@
 #include "Level/GameLevel.h"
 
 Item::Item(Vector2& position, int xPosition, int yPosition,int itemType)
-	: super("I", position, Color::YELLOW), xPosition(position.x), yPosition(position.y)
+	: super("I", position), xPosition(position.x), yPosition(position.y)
 {	
 	this->ItemType = itemType;
+	
+	SetColor();
 	SetPosition(position);
 }
 
@@ -21,4 +23,16 @@ int Item::GetItemType()
 void Item::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
+}
+
+void Item::SetColor()
+{
+	if (this->ItemType == 0)
+	{
+		this->color = Color::YELLOW;
+	}
+	else if (this->ItemType == 1)
+	{
+		this->color = Color::White;
+	}
 }
