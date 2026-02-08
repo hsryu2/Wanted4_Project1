@@ -25,3 +25,4 @@ void Timer::SetTargetTime(float newTargetTime)
 {
 	targetTime = newTargetTime;
 }
+
