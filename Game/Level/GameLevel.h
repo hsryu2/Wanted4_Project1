@@ -3,6 +3,7 @@
 #include "Level/Level.h"
 #include "Math/Vector2.h"
 #include "Util/Timer.h"
+#include "GameManager/GameManager.h"
 
 using namespace Wanted;
 

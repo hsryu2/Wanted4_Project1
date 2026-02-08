@@ -84,9 +84,10 @@ namespace Wanted
 				actors.erase(actors.begin() + ix);
 				continue;
 			}
-
+		
 			++ix;
 		}
+
 
 		// 추가 처리.
 		if (addRequestedActors.size() == 0)

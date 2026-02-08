@@ -23,6 +23,7 @@ GameLevel::GameLevel()
 
 GameLevel::~GameLevel()
 {
+	BulletSpawner::Get().ClearPointerListOnly();
 }
 
 void GameLevel::PlayerResistance(float deltaTime)
@@ -84,7 +85,8 @@ void GameLevel::Draw()
 		Sleep(2000);
 
 		// 게임 종료.
-		Engine::Get().QuitEngine();
+		GameManager::Get().EndGame();
+		//Engine::Get().QuitEngine();
 	}
 
 	// 점수 보여주기.

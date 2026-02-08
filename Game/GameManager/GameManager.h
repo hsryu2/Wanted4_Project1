@@ -10,7 +10,7 @@ enum class State
 {
 	GamePlay = 0,
 	GameStart = 1,
-	GameEnd = 2,
+	Restart = 2,
 	Length
 };
 
@@ -22,6 +22,8 @@ public:
 
 	void StartGame();
 	void EndGame();
+
+	void Restart();
 
 	static GameManager& Get();
 private:

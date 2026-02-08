@@ -151,4 +151,8 @@ void BulletSpawner::ClearBullet()
 	activeBullets.clear();
 }
 
+void BulletSpawner::ClearPointerListOnly() {
+	activeBullets.clear(); // delete는 하지 말고, 바구니만 비우기!
+}
+
 

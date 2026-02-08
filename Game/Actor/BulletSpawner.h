@@ -19,6 +19,8 @@ public:
 
 	void find(Actor* bullet);
 
+	void ClearPointerListOnly();
+
 private:
 	virtual void Tick(float deltaTime) override;
 
