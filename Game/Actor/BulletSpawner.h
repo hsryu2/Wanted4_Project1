@@ -26,9 +26,11 @@ private:
 
 	void spawnBullet(float deltaTime);
 	void spawnHomingBullet(float deltaTime);
+	void spawnSpeBullet(float deltaTime);
 
 	void spawnPosition();
-
+	void spawnSpeBulletPo();
+	
 	std::vector<Actor*> activeBullets;
 
 	int xPosition = 0;
@@ -36,11 +38,15 @@ private:
 
 	float bulletSpeed = 0.0f;
 
+	float currentAngle = 0.0f;
+
 	bool isBulletSpawn = true;
 
 	static BulletSpawner* instance;
 
 	Timer timer;
 	Timer HomingTimer;
+	Timer SpecialTimer;
+	Timer a;
 };
 

@@ -63,6 +63,7 @@ void GameManager::EndGame()
 
 void GameManager::Restart()
 {
+	score = 0;
 	Engine::SetNewLevel(new GameLevel());
 	state = (State)1;
 	isPlayGame = true;

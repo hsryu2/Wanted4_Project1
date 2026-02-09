@@ -36,6 +36,8 @@ protected:
 	int DirX = 0;
 	int DirY = 0;
 
+	float fDirX = 1.0f;
+	float fDirY = 1.0f;
 
 };
 

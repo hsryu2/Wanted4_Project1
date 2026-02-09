@@ -28,6 +28,7 @@ void HomingBullet::Tick(float deltaTime)
 
 	Shot(deltaTime);
 
+	SetPosition(position);
 }
 
 void HomingBullet::Shot(float deltaTime) {

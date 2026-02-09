@@ -7,6 +7,7 @@
 #include "Actor/HomingBullet.h"
 #include "Actor/ItemSpawner.h"
 #include "Actor/Item.h"
+#include "Actor/SpecialBullet.h"
 
 #include <iostream>
 
@@ -109,7 +110,7 @@ void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
 			continue;
 		}
 
-		if (actor->IsTypeOf<Bullet>() || actor->IsTypeOf<HomingBullet>())
+		if (actor->IsTypeOf<Bullet>() || actor->IsTypeOf<HomingBullet>()|| actor->IsTypeOf<SpecialBullet>())
 		{
 			bullets.emplace_back(actor);
 		}
