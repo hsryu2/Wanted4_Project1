@@ -19,9 +19,11 @@ BulletSpawner::BulletSpawner()
 
 	// 시간 설정.
 	timer.SetTargetTime(Util::RandomRange(0.1f, 0.3f));
-	HomingTimer.SetTargetTime(3.0f);
+	HomingTimer.SetTargetTime(Util::RandomRange(2.5f, 4.0f));
 	SpecialTimer.SetTargetTime(0.05f);
-	a.SetTargetTime(2.0f);
+	SpecialTimer2.SetTargetTime(0.2f);
+	PatternA.SetTargetTime(5.0f);
+	PatternB.SetTargetTime(10.0f);
 
 	isBulletSpawn = true;
 }
@@ -43,6 +45,7 @@ BulletSpawner& BulletSpawner::Get() {
 
 void BulletSpawner::find(Actor* bullet)
 {
+	// 활동중인 탄환이 없으면 리턴.
 	if (activeBullets.empty())
 	{
 		return;
@@ -53,7 +56,7 @@ void BulletSpawner::find(Actor* bullet)
 		if (*it == bullet)
 		{
 			activeBullets.erase(it); // 찾으면 리스트에서 삭제
-			return; // 찾았으니 함수 종료
+			return;
 		}
 	}
 }
@@ -62,30 +65,36 @@ void BulletSpawner::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	a.Tick(deltaTime);
+	PatternA.Tick(deltaTime);
+	PatternB.Tick(deltaTime);
 
-	if (a.IsTimeOut()) // 현재 진행 중인 패턴 시간이 다 되면
+	if (PatternA.IsTimeOut()) // 현재 진행 중인 패턴 시간이 다 되면
 	{
 		if (isBulletSpawn) // 일반 패턴 도중
 		{
 			ClearBullet();        // 기존 탄막 제거
 			isBulletSpawn = false; // 특수 패턴으로 변경
-			a.SetTargetTime(5.0f);
+			PatternA.SetTargetTime(5.0f);
 		}
 		else // 특수 패턴 중
 		{
 			isBulletSpawn = true;  // 다시 일반 패턴으로 변경
 			// 일반 패턴을 유지할 시간만큼 타이머 재설정
-			a.SetTargetTime(12.0f);
+			PatternA.SetTargetTime(12.0f);
 		}
 
-		a.Reset();
+		PatternA.Reset();
 	}
 	
 	if(isBulletSpawn)
 	{
 		spawnBullet(deltaTime);
 		spawnHomingBullet(deltaTime);
+		if (PatternB.IsTimeOut())
+		{
+			spawnSpreadBullet(deltaTime);
+		}
+
 	}
 	else
 	{	
@@ -200,6 +209,46 @@ void BulletSpawner::spawnSpeBullet(float deltaTime)
 	}
 	SpecialTimer.Reset();
 
+}
+
+// 10초 이후부터는 일반 패턴 강화.
+void BulletSpawner::spawnSpreadBullet(float deltaTime)
+{
+	SpecialTimer2.Tick(deltaTime);
+
+	if (!SpecialTimer2.IsTimeOut())
+	{
+		return;
+	}
+
+	if (SpecialTimer2.IsTimeOut())
+	{
+		bulletSpeed = 12.0f;
+		spawnSpeBulletPo();
+		Vector2 bulletPosition(xPosition, yPosition);
+		float radian = currentAngle * (3.141592f / 180.0f);
+
+		// 2. 각도에 따른 방향 벡터 계산
+		float fDirX = cosf(radian);
+		float fDirY = sinf(radian);
+
+
+		// 탄환 생성
+		SpecialBullet* newBullet = new SpecialBullet(
+			bulletPosition,
+			bulletSpeed,
+			static_cast<float>(position.y),
+			static_cast<float>(position.x),
+			fDirX, fDirY);
+		GetOwner()->AddNewActor(newBullet);
+		activeBullets.emplace_back(newBullet);
+
+		currentAngle += bulletSpeed;
+		if (currentAngle >= 360.0f) currentAngle -= 360.0f;
+
+
+	}
+	SpecialTimer2.Reset();
 }
 
 // 불렛 스폰 위치 정하기.

@@ -19,6 +19,10 @@ public:
 	void SetResistanceColor();
 	void SetOriginalColor();
 
+	int ItemCount_Resistance = 0;
+
+	int ItemCount_Clear = 0;
+
 private:
 	virtual void Tick(float deltaTime) override;
 
@@ -34,6 +38,11 @@ private:
 	// 아래로 이동하는 함수.
 	void MoveDown(float deltaTime);
 
+
+	// 아이템 사용
+	void useItem_Clear(float deltaTime);
+
+
 	
 private:
 
@@ -48,4 +57,7 @@ private:
 	float yf = 0.0f;
 
 	static Player* instance;
+
+
+
 };

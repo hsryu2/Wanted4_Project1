@@ -182,11 +182,12 @@ void GameLevel::ProcessCollisionPlayerAndItem(float deltaTime)
 				switch (t) {
 
 				case 0: // 무적
+
 					PlayerResistance(deltaTime);
 					break;
 
 				case 1: // 화면에 있는 모든 탄환 제거
-					BulletSpawner::Get().ClearBullet();
+					Player::Get().ItemCount_Clear++;
 					break;
 
 				case 2: // 화면에 있는 모든 총알 멈추기.
@@ -204,23 +205,4 @@ void GameLevel::ProcessCollisionPlayerAndItem(float deltaTime)
 }
 
 
-//void GameLevel::ShowScore()
-//{
-//	sprintf_s(scoreString, 128, "Score: %d", score);
-//	Renderer::Get().Submit(
-//		scoreString,
-//		Vector2(0, Engine::Get().GetHeight() - 1)
-//	);
-//}
-//
-//void GameLevel::Score(float deltaTime)
-//{
-//	scoreAccumulator += deltaTime;
-//
-//	if (scoreAccumulator >= 1.0f)
-//	{
-//		score += 1;
-//		scoreAccumulator = 0.0f;
-//	}
-//}
 

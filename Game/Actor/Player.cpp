@@ -4,6 +4,7 @@
 #include "Level/Level.h"
 #include "Render/Renderer.h"
 #include "Level/GameLevel.h"
+#include "Actor/BulletSpawner.h"
 
 #include <iostream>
 
@@ -62,7 +63,11 @@ void Player::Tick(float deltaTime)
 	{
 		MoveDown(deltaTime);
 	}
-
+	if (Input::Get().GetKeyDown('Q'))
+	{
+		useItem_Clear(deltaTime);
+	}
+	GameManager::Get().ShowStoreItem();
 }
 
 
@@ -157,6 +162,17 @@ void Player::MoveDown(float deltaTime)
 }
 
 
+void Player::useItem_Clear(float deltaTime)
+{
+	if (ItemCount_Clear <= 0)
+	{
+		return;
+	}
+	ItemCount_Clear--;
+	BulletSpawner::Get().ClearBullet();
+}
+
+
 
 Player& Player::Get()
 {
@@ -172,7 +188,7 @@ Player& Player::Get()
 
 void Player::SetResistanceColor()
 {	
-	this->color = Color::YELLOW;
+	this->color = Color::Magenta;
 	
 }
 

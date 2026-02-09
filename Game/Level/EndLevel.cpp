@@ -53,7 +53,7 @@ void EndLevel::Draw()
 	super::Draw();
 
 	Renderer::Get().Submit("Game Over",
-		Vector2(Engine::Get().GetWidth() / 2, Engine::Get().GetHeight() / 3),
+		Vector2(Engine::Get().GetWidth() / 2 - 4, Engine::Get().GetHeight() / 3),
 		Color::White);
 
 	GameManager::Get().ShowEndScore();
@@ -65,7 +65,7 @@ void EndLevel::Draw()
 
 		Renderer::Get().Submit(
 			EMenuItems[i]->text,
-			Vector2(Engine::Get().GetWidth() / 2, (Engine::Get().GetHeight() / 2) + i),
+			Vector2(Engine::Get().GetWidth() / 2 - (EMenuItems[i]->length) / 2, (Engine::Get().GetHeight() / 2) + i * 2),
 			SelectedText);
 	}
 }

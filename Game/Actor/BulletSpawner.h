@@ -27,6 +27,7 @@ private:
 	void spawnBullet(float deltaTime);
 	void spawnHomingBullet(float deltaTime);
 	void spawnSpeBullet(float deltaTime);
+	void spawnSpreadBullet(float deltaTime);
 
 	void spawnPosition();
 	void spawnSpeBulletPo();
@@ -47,6 +48,9 @@ private:
 	Timer timer;
 	Timer HomingTimer;
 	Timer SpecialTimer;
-	Timer a;
+	Timer SpecialTimer2;
+	Timer PatternA;
+	Timer PatternB;
+	
 };
 

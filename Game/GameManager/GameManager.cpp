@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Actor/BulletSpawner.h"
+#include "Actor/Player.h"
 
 #include <iostream>
 
@@ -91,10 +92,19 @@ void GameManager::ShowScore()
 
 void GameManager::ShowEndScore()
 {
-	sprintf_s(scoreString, 128, "Score: %d", score);
+	sprintf_s(scoreString, 128, " Score:%d", score);
 	Renderer::Get().Submit(
 		scoreString,
-		Vector2(Engine::Get().GetWidth() / 2, Engine::Get().GetHeight() / 3 + 3)
+		Vector2(Engine::Get().GetWidth() / 2 - 4, Engine::Get().GetHeight() / 3 + 3)
+	);
+}
+
+void GameManager::ShowStoreItem()
+{
+	sprintf_s(itemString, 32, "Boom : %d", Player::Get().ItemCount_Clear);
+	Renderer::Get().Submit(
+		itemString,
+		Vector2(Engine::Get().GetWidth() / 2 - 2, Engine::Get().GetHeight() - 1)
 	);
 }
 

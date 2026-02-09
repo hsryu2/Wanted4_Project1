@@ -12,9 +12,9 @@ struct StartMenuItem
 	StartMenuItem(const char* text, OnSelected onSelected)
 		: onSelected(onSelected)
 	{
-		size_t length = strlen(text) + 1;
-		this->text = new char[length];
-		strcpy_s(this->text, length, text);
+		length = strlen(text);
+		this->text = new char[length + 1];
+		strcpy_s(this->text, length + 1, text);
 	}
 
 	~StartMenuItem()
@@ -27,7 +27,7 @@ struct StartMenuItem
 	}
 
 	char* text = nullptr;
-
+	size_t length = 0;
 	OnSelected onSelected = nullptr;
 };
 
@@ -51,7 +51,6 @@ private:
 
 	Color SelectedColor = Color::Green;
 	Color UnSelectedColor = Color::White;
-
 	int currentIndex = 0;
 };
 

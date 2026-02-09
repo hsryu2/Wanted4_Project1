@@ -13,7 +13,10 @@ namespace Wanted
 		Blue = FOREGROUND_BLUE,
 		Green = FOREGROUND_GREEN,
 		Red = FOREGROUND_RED,
+		Cyan = Blue | Green,             // ÇÏ´Ã»ö (ÆÄ¶û + ÃÊ·Ï)
+		Magenta = Blue | Red,               // ÀÚÁÖ»ö (ÆÄ¶û + »¡°­)
 		YELLOW = Red | Green,
 		White = Blue | Green | Red,
+
 	};
 }

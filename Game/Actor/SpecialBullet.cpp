@@ -1,4 +1,5 @@
 #include "SpecialBullet.h"
+#include "Engine/Engine.h"
 
 
 SpecialBullet::SpecialBullet(Vector2& position, 
@@ -30,6 +31,28 @@ void SpecialBullet::Tick(float deltaTime)
 	super::Tick(deltaTime);
 
 	SpecialShot(deltaTime);
+
+	// 탄환이 콘솔 사이즈 끝에 도달 시 파괴
+	if (position.x > Engine::Get().GetWidth())
+	{
+		Destroy();
+		return;
+	}
+	if (position.x < 0)
+	{
+		Destroy();
+		return;
+	}
+	if (position.y > Engine::Get().GetHeight())
+	{
+		Destroy();
+		return;
+	}
+	if (position.y < 0)
+	{
+		Destroy();
+		return;
+	}
 }
 
 void SpecialBullet::SpecialShot(float deltaTime)

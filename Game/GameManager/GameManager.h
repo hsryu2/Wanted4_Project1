@@ -30,6 +30,8 @@ public:
 	void Score(float deltaTime);
 	void ShowScore();
 	void ShowEndScore();
+	void ShowStoreItem();
+
 
 	static GameManager& Get();
 
@@ -49,6 +51,9 @@ private:
 
 	// 점수 문자열.
 	char scoreString[128] = {};
+
+	// 아이템 문자열.
+	char itemString[32] = {};
 
 	static GameManager* instance;
 };

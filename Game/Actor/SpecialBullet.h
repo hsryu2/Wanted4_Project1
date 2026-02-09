@@ -9,7 +9,10 @@ class SpecialBullet : public Bullet
 	RTTI_DECLARATIONS(SpecialBullet, Actor)
 
 public:
-	SpecialBullet(Vector2& position, float speed, float yPosition, float xPosition, float fDirX, float fDirY);
+	SpecialBullet(Vector2& position, 
+		float speed, float yPosition, 
+		float xPosition, float fDirX, 
+		float fDirY);
 	~SpecialBullet();
 
 private:

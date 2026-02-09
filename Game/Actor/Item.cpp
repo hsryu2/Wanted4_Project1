@@ -14,7 +14,6 @@ Item::~Item()
 {
 }
 
-
 int Item::GetItemType()
 {
 	return this->ItemType;
@@ -29,7 +28,7 @@ void Item::SetColor()
 {
 	if (this->ItemType == 0)
 	{
-		this->color = Color::YELLOW;
+		this->color = Color::Magenta;
 	}
 	else if (this->ItemType == 1)
 	{

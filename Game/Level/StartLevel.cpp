@@ -54,7 +54,7 @@ void StartLevel::Draw()
 	super::Draw();
 
 	Renderer::Get().Submit("Console Dodge",
-		Vector2(Engine::Get().GetWidth() / 3, Engine::Get().GetHeight() / 3),
+		Vector2(Engine::Get().GetWidth() / 2 - 6, Engine::Get().GetHeight() / 3),
 		Color::White);
 
 	for (int i = 0; i < static_cast<int>(MenuItems.size()); i++)
@@ -63,12 +63,12 @@ void StartLevel::Draw()
 
 		Renderer::Get().Submit(
 			MenuItems[i]->text,
-			Vector2(Engine::Get().GetWidth() / 3, (Engine::Get().GetHeight() / 2) + i),
+			Vector2(Engine::Get().GetWidth() / 2 - (MenuItems[i]->length) / 2, (Engine::Get().GetHeight() / 2) + i * 2),
 			SelectedText);
 	}
 
-	Renderer::Get().Submit("이동 : 방향키, 스페이스바(Holding) : 정밀이동",
-		Vector2(Engine::Get().GetWidth() / 3, Engine::Get().GetHeight() - 2),
+	Renderer::Get().Submit("이동 : 방향키, 스페이스바(Holding) : 정밀이동 , 아이템 사용 : Q",
+		Vector2(Engine::Get().GetWidth() / 4, Engine::Get().GetHeight() - 2),
 		Color::White);
 
 }
