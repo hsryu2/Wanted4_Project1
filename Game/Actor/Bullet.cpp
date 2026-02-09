@@ -62,12 +62,12 @@ void Bullet::SetDirection()
 	{
 		if (direction == 1) // 대각선 모드일 때
 		{
-			// 1. 가로 방향(DirX) 결정: 왼쪽 벽이면 오른쪽(1), 오른쪽 벽이면 왼쪽(-1)
+			// 1. 가로 방향(DirX) 결정
 			if (position.x <= 0) DirX = 1;
 			else if (position.x >= Engine::Get().GetWidth() - 2) DirX = -1;
 			else DirX = (position.x < Engine::Get().GetWidth() / 2) ? 1 : -1; // 중간쯤이면 가까운 쪽 반대로
 
-			// 2. 세로 방향(DirY) 결정: 위쪽 벽이면 아래(1), 아래쪽 벽이면 위(-1)
+			// 2. 세로 방향(DirY) 결정
 			if (position.y <= 0) DirY = 1;
 			else if (position.y >= Engine::Get().GetHeight() - 1) DirY = -1;
 			else DirY = (position.y < Engine::Get().GetHeight() / 2) ? 1 : -1;

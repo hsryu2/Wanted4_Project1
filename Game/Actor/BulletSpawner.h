@@ -36,6 +36,8 @@ private:
 
 	float bulletSpeed = 0.0f;
 
+	bool isBulletSpawn = true;
+
 	static BulletSpawner* instance;
 
 	Timer timer;

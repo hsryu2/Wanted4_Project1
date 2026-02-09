@@ -56,6 +56,9 @@ void EndLevel::Draw()
 		Vector2(Engine::Get().GetWidth() / 2, Engine::Get().GetHeight() / 3),
 		Color::White);
 
+	GameManager::Get().ShowEndScore();
+	
+
 	for (int i = 0; i < static_cast<int>(EMenuItems.size()); i++)
 	{
 		Color SelectedText = (i == currentIndex) ? SelectedColor : UnSelectedColor;

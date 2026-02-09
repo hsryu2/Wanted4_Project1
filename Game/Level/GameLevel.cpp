@@ -56,7 +56,7 @@ void GameLevel::Tick(float deltaTime)
 
 
 	// 1초당 점수 추가.
-	Score(deltaTime);
+	GameManager::Get().Score(deltaTime);
 
 	// 충돌 판정 처리.
 	ProcessCollisionPlayerAndEnemyBullet();
@@ -76,21 +76,21 @@ void GameLevel::Draw()
 		Renderer::Get().Submit("!Dead!", playerDeadPosition);
 
 		// 점수 보여주기.
-		ShowScore();
+		GameManager::Get().ShowScore();
 
 		// 화면에 바로 표시.
 		Renderer::Get().PresentImmediately();
 
 		// 프로그램 정지.
-		Sleep(2000);
+		Sleep(1000);
 
 		// 게임 종료.
 		GameManager::Get().EndGame();
-		//Engine::Get().QuitEngine();
+		
 	}
 
 	// 점수 보여주기.
-	ShowScore();
+	GameManager::Get().ShowScore();
 }
 
 
@@ -202,27 +202,24 @@ void GameLevel::ProcessCollisionPlayerAndItem(float deltaTime)
 	}
 }
 
-void GameLevel::ShowScore()
-{
-	sprintf_s(scoreString, 128, "Score: %d", score);
-	Renderer::Get().Submit(
-		scoreString,
-		Vector2(0, Engine::Get().GetHeight() - 1)
-	);
-}
 
-void GameLevel::Score(float deltaTime)
-{
-	scoreAccumulator += deltaTime;
+//void GameLevel::ShowScore()
+//{
+//	sprintf_s(scoreString, 128, "Score: %d", score);
+//	Renderer::Get().Submit(
+//		scoreString,
+//		Vector2(0, Engine::Get().GetHeight() - 1)
+//	);
+//}
+//
+//void GameLevel::Score(float deltaTime)
+//{
+//	scoreAccumulator += deltaTime;
+//
+//	if (scoreAccumulator >= 1.0f)
+//	{
+//		score += 1;
+//		scoreAccumulator = 0.0f;
+//	}
+//}
 
-	if (scoreAccumulator >= 1.0f)
-	{
-		score += 1;
-		scoreAccumulator = 0.0f;
-	}
-}
-
-void GameLevel::ClearAllBullet()
-{
-
-}

@@ -8,6 +8,7 @@
 
 ItemSpawner::ItemSpawner()
 {
+	// 아이템 스폰 주기
 	timer.SetTargetTime(Util::RandomRange(8.0f, 12.0f));
 
 }
@@ -23,7 +24,8 @@ void ItemSpawner::Tick(float deltaTime)
 	SpawnItem(deltaTime);
 }
 
-void ItemSpawner::SpawnItem(float deltaTime)
+// 아이템 스폰
+void ItemSpawner::SpawnItem(float deltaTime) 
 {
 	timer.Tick(deltaTime);
 
@@ -35,6 +37,7 @@ void ItemSpawner::SpawnItem(float deltaTime)
 
 	ItemSpawnPosition();
 	
+	// 아이템 타입 정하기. 랜덤으로 지정.
 	int itemtype = 0;
 	itemtype = Util::Random(0, 1);
 
@@ -43,7 +46,8 @@ void ItemSpawner::SpawnItem(float deltaTime)
 
 }
 
-void ItemSpawner::ItemSpawnPosition()
+// 아이템 스폰 위치 정하기.
+void ItemSpawner::ItemSpawnPosition() 
 {
 	int xMax = Engine::Get().GetWidth();
 	int yMax = Engine::Get().GetHeight();

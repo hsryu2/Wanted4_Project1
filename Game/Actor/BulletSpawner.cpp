@@ -26,7 +26,7 @@ BulletSpawner& BulletSpawner::Get() {
 	
 	if (!instance) {
 		
-		std::cout << "Error : BulletSpawner instance is null";
+		std::cout << "Error : BulletSpawner::Get(). instance is null";
 		__debugbreak();
 	}
 
@@ -50,15 +50,19 @@ void BulletSpawner::find(Actor* bullet)
 	}
 }
 
-void BulletSpawner::Tick(float deltaTime) //
+void BulletSpawner::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	spawnBullet(deltaTime);
-	spawnHomingBullet(deltaTime);
+	if(isBulletSpawn)
+	{
+		spawnBullet(deltaTime);
+		spawnHomingBullet(deltaTime);
+	}
 }
 
-void BulletSpawner::spawnBullet(float deltaTime) // 일반 탄환 생성
+// 일반 탄환 생성.
+void BulletSpawner::spawnBullet(float deltaTime) 
 {
 	timer.Tick(deltaTime);
 
@@ -71,6 +75,7 @@ void BulletSpawner::spawnBullet(float deltaTime) // 일반 탄환 생성
 
 	spawnPosition();
 
+	// 불렛 스피드 및 대각선 or 직선 탄환 정하기. 랜덤으로 지정.
 	bulletSpeed = Util::RandomRange(10.0f, 15.0f);
 	int SetDirection = Util::Random(0, 1);
 	Vector2 bulletPosition(xPosition, yPosition);
@@ -82,6 +87,8 @@ void BulletSpawner::spawnBullet(float deltaTime) // 일반 탄환 생성
 		static_cast<float>(position.x),
 		SetDirection);
 	GetOwner()->AddNewActor(newBullet);
+
+	// 전체 탄막 사라지게 하기 위해서 따로 탄환을 담아둘 객체에도 넣어줌.
 	activeBullets.emplace_back(newBullet);
 }
 
@@ -112,6 +119,7 @@ void BulletSpawner::spawnHomingBullet(float deltaTime) // 유도탄 생성
 
 }
 
+// 불렛 스폰 위치 정하기.
 void BulletSpawner::spawnPosition()
 {
 	int side;
@@ -125,14 +133,17 @@ void BulletSpawner::spawnPosition()
 		xPosition = Util::Random(1, xMax - 1);
 		yPosition = 0;
 		break;
+
 	case 1: // 1 : 오른쪽
 		xPosition = xMax - 2;
 		yPosition = Util::Random(1, yMax);
 		break;
+
 	case 2: // 2 : 아래쪽
 		xPosition = Util::Random(1, xMax - 1);
 		yPosition = yMax - 1;
 		break;
+
 	case 3: // 3 : 왼쪽
 		xPosition = 0;
 		yPosition = Util::Random(1, yMax);
@@ -141,6 +152,7 @@ void BulletSpawner::spawnPosition()
 	}
 }
 
+// 전체 탄막 지우기 아이템 획득시 호출되는 함수.
 void BulletSpawner::ClearBullet()
 {
 	for (Actor* bullet : activeBullets)
@@ -151,8 +163,7 @@ void BulletSpawner::ClearBullet()
 	activeBullets.clear();
 }
 
+// 레벨을 바꿀 때 사용할 객체 비우기.
 void BulletSpawner::ClearPointerListOnly() {
-	activeBullets.clear(); // delete는 하지 말고, 바구니만 비우기!
+	activeBullets.clear();
 }
-
-

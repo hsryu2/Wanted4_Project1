@@ -35,10 +35,6 @@ private:
 	void MoveDown(float deltaTime);
 
 	
-	
-
-	//inline Vector2 GetPosition() { return position; }
-	
 private:
 
 	// 타이머 변수.

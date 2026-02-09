@@ -15,8 +15,6 @@ class GameLevel : public Level
 public:
 	GameLevel();
 	~GameLevel();
-
-
 	
 private:
 
@@ -30,17 +28,8 @@ private:
 	void ProcessCollisionPlayerAndEnemyBullet();
 	void ProcessCollisionPlayerAndItem(float deltaTime);
 
-	// 점수 보여주는 함수.
-	void ShowScore();
-
-	void Score(float deltaTime);
-
-	void ClearAllBullet();
 
 private:
-	// 점수 변수.
-	int score = 0;
-	float scoreAccumulator = 0.0f;
 
 	// 플레이어가 죽었는지 확인.
 	bool isPlayerDead = false;
@@ -51,10 +40,6 @@ private:
 	// 플레이어가 죽은 위치 (Draw에서 처리하기 위해 Tick에서 저장).
 	Vector2 playerDeadPosition;
 
-	// 점수 문자열.
-	char scoreString[128] = {};
-
-	
 
 	Timer timer;
 };
