@@ -25,7 +25,7 @@ BulletSpawner::BulletSpawner()
 	PatternA.SetTargetTime(5.0f);
 	PatternB.SetTargetTime(10.0f);
 
-	isBulletSpawn = true;
+	//isBulletSpawn = true;
 }
 
 BulletSpawner::~BulletSpawner()

@@ -25,7 +25,7 @@ private:
 	void TickResistance(float deltaTime);
 
 	// 충돌 판정 처리 함수.
-	void ProcessCollisionPlayerAndEnemyBullet();
+	void ProcessCollisionPlayerAndBullet();
 	void ProcessCollisionPlayerAndItem(float deltaTime);
 
 

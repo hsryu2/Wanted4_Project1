@@ -19,8 +19,6 @@ public:
 	void SetResistanceColor();
 	void SetOriginalColor();
 
-	int ItemCount_Resistance = 0;
-
 	int ItemCount_Clear = 0;
 
 private:

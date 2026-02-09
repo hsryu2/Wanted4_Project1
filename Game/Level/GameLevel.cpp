@@ -60,7 +60,7 @@ void GameLevel::Tick(float deltaTime)
 	GameManager::Get().Score(deltaTime);
 
 	// 충돌 판정 처리.
-	ProcessCollisionPlayerAndEnemyBullet();
+	ProcessCollisionPlayerAndBullet();
 	ProcessCollisionPlayerAndItem(deltaTime);
 
 	// 무적 아이템 타이머
@@ -95,7 +95,7 @@ void GameLevel::Draw()
 }
 
 
-void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
+void GameLevel::ProcessCollisionPlayerAndBullet()
 {
 	// 액터 필터링을 위한 변수.
 	Player* player = nullptr;
@@ -127,6 +127,14 @@ void GameLevel::ProcessCollisionPlayerAndEnemyBullet()
 	{
 		if (bullet->TestIntersect(player) && isPlayerResistance == false)
 		{
+
+			if (Player::Get().ItemCount_Clear > 0)
+			{
+				BulletSpawner::Get().ClearBullet();
+				Player::Get().ItemCount_Clear--;
+
+				return;
+			}
 			// 플레이어 죽음 설정.
 			isPlayerDead = true;
 
