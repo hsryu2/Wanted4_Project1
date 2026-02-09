@@ -32,6 +32,8 @@ private:
 	void spawnPosition();
 	void spawnSpeBulletPo();
 	
+	void ClearEffect(Vector2 position);
+
 	std::vector<Actor*> activeBullets;
 
 	int xPosition = 0;

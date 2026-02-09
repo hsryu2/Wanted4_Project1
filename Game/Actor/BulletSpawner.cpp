@@ -6,6 +6,7 @@
 #include "Actor/HomingBullet.h"
 #include "Actor/Player.h"
 #include "Actor/SpecialBullet.h"
+#include "Actor/UseItemEffect.h"
 
 
 #include <math.h>
@@ -18,7 +19,7 @@ BulletSpawner::BulletSpawner()
 	instance = this;
 
 	// 시간 설정.
-	timer.SetTargetTime(Util::RandomRange(0.1f, 0.3f));
+	timer.SetTargetTime(Util::RandomRange(0.1f, 0.2f));
 	HomingTimer.SetTargetTime(Util::RandomRange(2.5f, 4.0f));
 	SpecialTimer.SetTargetTime(0.05f);
 	SpecialTimer2.SetTargetTime(0.2f);
@@ -178,7 +179,7 @@ void BulletSpawner::spawnSpeBullet(float deltaTime)
 		Vector2 bulletPosition2(xPosition * 1.5f, yPosition);
 		float radian = currentAngle * (3.141592f / 180.0f);
 
-		// 2. 각도에 따른 방향 벡터 계산
+		// 각도에 따른 방향 벡터 계산
 		float fDirX = cosf(radian);
 		float fDirY = sinf(radian);
 
@@ -291,6 +292,27 @@ void BulletSpawner::spawnSpeBulletPo()
 
 }
 
+// 탄막 클리어 효과.
+void BulletSpawner::ClearEffect(Vector2 position)
+{
+	// 8방향으로 퍼지는 효과
+	float angles[] = { 0, 30, 45, 60, 90, 120 , 135, 150, 180, 210, 225, 240, 270, 300, 315, 330 };
+
+	for (float angle : angles)
+	{
+		float radian = angle * (3.141592f / 180.0f);
+
+		float fDirX = cosf(radian);
+		float fDirY = sinf(radian);
+		
+
+		// 아이템 종류에 따라 다른 색상의 입자 생성
+		UseItemEffect* p = new UseItemEffect(position, fDirX, fDirY, 20.0f, Color::Cyan);
+		GetOwner()->AddNewActor(p);
+		
+	}
+}
+
 // 전체 탄막 지우기 아이템 획득시 호출되는 함수.
 void BulletSpawner::ClearBullet()
 {
@@ -298,7 +320,7 @@ void BulletSpawner::ClearBullet()
 	{
 		bullet->Destroy();
 	}
-
+	ClearEffect(Player::Get().GetPosition());
 	activeBullets.clear();
 }
 

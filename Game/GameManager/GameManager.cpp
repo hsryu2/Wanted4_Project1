@@ -75,7 +75,7 @@ GameManager& GameManager::Get()
 	if (!instance)
 	{
 		std::cout << "Error : GameManager::Get(). instance is null.";
-		__debugbreak;
+		__debugbreak();
 	}
 
 	return *instance;

@@ -180,7 +180,7 @@ Player& Player::Get()
 	{
 		std::cout << "Error: Player::Get(). instance is null\n";
 
-		__debugbreak;
+		__debugbreak();
 	}
 
 	return *instance;

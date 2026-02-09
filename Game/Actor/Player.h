@@ -19,7 +19,7 @@ public:
 	void SetResistanceColor();
 	void SetOriginalColor();
 
-	int ItemCount_Clear = 0;
+	int ItemCount_Clear = 5;
 
 private:
 	virtual void Tick(float deltaTime) override;
