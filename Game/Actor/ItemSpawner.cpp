@@ -9,7 +9,7 @@
 ItemSpawner::ItemSpawner()
 {
 	// 아이템 스폰 주기
-	timer.SetTargetTime(Util::RandomRange(5.0f, 8.0f));
+	timer.SetTargetTime(Util::RandomRange(7.0f, 10.0f));
 
 }
 

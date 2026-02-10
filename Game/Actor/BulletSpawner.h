@@ -53,6 +53,7 @@ private:
 	Timer SpecialTimer2;
 	Timer PatternA;
 	Timer PatternB;
+	Timer PatternC;
 	
 };
 

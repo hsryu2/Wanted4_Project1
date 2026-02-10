@@ -18,14 +18,6 @@ private:
 protected:
 
 	int direction = 0;
-	
-	// 대각선 쏘는 방향 정하기.
-	// d = 0 우하단
-	// d = 1 우상단
-	// d = 2 좌상단
-	// d = 3 좌하단
-
-	int d = -1;
 
 	float speed = 0.0f;
 

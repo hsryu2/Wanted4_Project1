@@ -31,8 +31,10 @@ void HomingBullet::Tick(float deltaTime)
 	SetPosition(position);
 }
 
+
 void HomingBullet::Shot(float deltaTime) {
 
+	// 플레이어를 따라갈 수 있도록 위치 가져오기.
 	Vector2 targetpos = Player::Get().GetPosition();
 
 	// 1. X축 유도

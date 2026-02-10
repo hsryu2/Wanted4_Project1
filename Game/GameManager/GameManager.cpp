@@ -51,6 +51,7 @@ void GameManager::StartGame()
 	
 }
 
+// 게임 오버
 void GameManager::EndGame()
 {
 	system("cls");
@@ -64,25 +65,26 @@ void GameManager::EndGame()
 	mainLevel = levels[static_cast<int>(state)];
 }
 
-
+// 재시작
 void GameManager::Restart()
 {
 	score = 0;
 	state = State::GameStart;
 	isPlayGame = true;
 
-	// 1. 기존에 벡터가 들고 있던 1번 인덱스(GameLevel) 메모리 해제
+	// 기존에 벡터가 들고 있던 GameLevel Index 메모리 해제.
 	if (levels[1] != nullptr)
 	{
 		delete levels[1];
 	}
 
-	// 2. 새로운 레벨 객체 생성 및 벡터 업데이트
+	// 새로운 레벨 객체 생성 및 벡터 업데이트.
 	levels[1] = new GameLevel();
 
-	// 3. 엔진에 이 새로운 레벨을 세팅
+	// 엔진에 새로운 레벨을 세팅.
 	Engine::Get().SetNewLevel(levels[1]);
 }
+
 
 void GameManager::PauseGame()
 {
@@ -132,7 +134,7 @@ void GameManager::ShowScore()
 
 void GameManager::ShowEndScore()
 {
-	sprintf_s(scoreString, 128, " Score:%d", score);
+	sprintf_s(scoreString, 128, "Score:%d", score);
 	stringSize = strlen(scoreString);
 	Renderer::Get().Submit(
 		scoreString,

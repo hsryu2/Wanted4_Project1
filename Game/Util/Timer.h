@@ -18,6 +18,8 @@ public:
 	// 목표 시간 설정 함수.
 	void SetTargetTime(float newTargetTime);
 
+	float GetTargetTime() { return elapsedTime; }
+
 private:
 	// 경과 시간 확인용 변수.
 	float elapsedTime = 0.0f;

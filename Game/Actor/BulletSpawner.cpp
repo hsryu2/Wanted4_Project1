@@ -18,15 +18,31 @@ BulletSpawner::BulletSpawner()
 {
 	instance = this;
 
-	// 시간 설정.
+	// 탄환 생성 주기 설정.
+
+	// 일반탄
 	timer.SetTargetTime(Util::RandomRange(0.1f, 0.2f));
+	
+	// 유도탄
 	HomingTimer.SetTargetTime(Util::RandomRange(2.5f, 4.0f));
-	SpecialTimer.SetTargetTime(0.05f);
+
+	// 특수패턴 탄
+	SpecialTimer.SetTargetTime(0.03f);
+
+	// 일반 패턴 강화 탄막
 	SpecialTimer2.SetTargetTime(0.2f);
+
+	// 게임 시작 이후 첫 패턴 시간 설정
+
+	// 첫 특수 탄막 패턴 시작 시간
 	PatternA.SetTargetTime(5.0f);
+
+	// 일반 패턴 강화 탄막 시작 시간
 	PatternB.SetTargetTime(10.0f);
 
-	//isBulletSpawn = true;
+	// 전체 패턴 강화 시작 시간
+	PatternC.SetTargetTime(20.0f);
+
 }
 
 BulletSpawner::~BulletSpawner()
@@ -44,6 +60,7 @@ BulletSpawner& BulletSpawner::Get() {
 	return *instance;
 }
 
+// 전체 탄막 지우기 위한 활동중인 bullet 객체 찾는 함수.
 void BulletSpawner::find(Actor* bullet)
 {
 	// 활동중인 탄환이 없으면 리턴.
@@ -68,6 +85,7 @@ void BulletSpawner::Tick(float deltaTime)
 
 	PatternA.Tick(deltaTime);
 	PatternB.Tick(deltaTime);
+	PatternC.Tick(deltaTime);
 
 	if (PatternA.IsTimeOut()) // 현재 진행 중인 패턴 시간이 다 되면
 	{
@@ -87,6 +105,8 @@ void BulletSpawner::Tick(float deltaTime)
 		PatternA.Reset();
 	}
 	
+	// 특수 패턴 여부
+	// 특수패턴 중에는 일반 탄환 생성 X
 	if(isBulletSpawn)
 	{
 		spawnBullet(deltaTime);
@@ -97,6 +117,8 @@ void BulletSpawner::Tick(float deltaTime)
 		}
 
 	}
+	
+	// 특수패턴 시작
 	else
 	{	
 		spawnSpeBullet(deltaTime);
@@ -118,7 +140,25 @@ void BulletSpawner::spawnBullet(float deltaTime)
 	spawnPosition();
 
 	// 불렛 스피드 및 대각선 or 직선 탄환 정하기. 랜덤으로 지정.
-	bulletSpeed = Util::RandomRange(10.0f, 15.0f);
+	// 시간이 지나면 더욱 빨라지도록 스피드 설정
+	if (PatternC.IsTimeOut())
+	{
+		bulletSpeed = Util::RandomRange(15.0f, 22.5f);
+	}
+	else
+	{
+		bulletSpeed = Util::RandomRange(10.0f, 15.0f);
+	}
+
+	// 매 프레임마다 탄환 생성 주기가 줄어들도록 만들었음.
+	float currentRate = timer.GetTargetTime();
+	if (currentRate > 0.05f)
+	{
+		
+		timer.SetTargetTime(currentRate - 0.001f * deltaTime);
+	}
+	
+	// 대각선 탄환 결정
 	int SetDirection = Util::Random(0, 1);
 	Vector2 bulletPosition(xPosition, yPosition);
 
@@ -130,11 +170,13 @@ void BulletSpawner::spawnBullet(float deltaTime)
 		SetDirection);
 	GetOwner()->AddNewActor(newBullet);
 
-	// 전체 탄막 사라지게 하기 위해서 따로 탄환을 담아둘 객체에도 넣어줌.
+	// 전체 탄막 지우기 아이템을 위해서 따로 탄환을 담아둘 객체에도 넣어줌.
 	activeBullets.emplace_back(newBullet);
 }
 
-void BulletSpawner::spawnHomingBullet(float deltaTime) // 유도탄 생성
+
+// 유도탄 생성
+void BulletSpawner::spawnHomingBullet(float deltaTime) 
 {
 	HomingTimer.Tick(deltaTime);
 
@@ -162,6 +204,7 @@ void BulletSpawner::spawnHomingBullet(float deltaTime) // 유도탄 생성
 }
 
 // 특수패턴 탄환 생성.
+// 시간이 지나면 더욱 빨라지도록 스피드 설정
 void BulletSpawner::spawnSpeBullet(float deltaTime)
 {
 	SpecialTimer.Tick(deltaTime);
@@ -173,7 +216,16 @@ void BulletSpawner::spawnSpeBullet(float deltaTime)
 
 	if (SpecialTimer.IsTimeOut())
 	{
-		bulletSpeed = Util::RandomRange(10.0f, 20.0f);
+		if (PatternC.IsTimeOut())
+		{
+			bulletSpeed = Util::RandomRange(15.0f, 30.0f);
+		}
+		else
+		{
+			bulletSpeed = Util::RandomRange(10.0f, 20.0f);
+		}
+
+		// 위치 설정
 		spawnSpeBulletPo();
 		Vector2 bulletPosition1(xPosition / 2, yPosition);
 		Vector2 bulletPosition2(xPosition * 1.5f, yPosition);
@@ -224,7 +276,16 @@ void BulletSpawner::spawnSpreadBullet(float deltaTime)
 
 	if (SpecialTimer2.IsTimeOut())
 	{
-		bulletSpeed = 12.0f;
+		
+		if (PatternC.IsTimeOut())
+		{
+			bulletSpeed = 18.0f;
+		}
+		else
+		{
+			bulletSpeed = 12.0f;
+		}
+
 		spawnSpeBulletPo();
 		Vector2 bulletPosition(xPosition, yPosition);
 		float radian = currentAngle * (3.141592f / 180.0f);

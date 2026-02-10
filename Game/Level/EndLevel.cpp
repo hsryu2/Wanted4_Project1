@@ -52,8 +52,11 @@ void EndLevel::Draw()
 {
 	super::Draw();
 
-	Renderer::Get().Submit("Game Over",
-		Vector2(Engine::Get().GetWidth() / 2 - 4, Engine::Get().GetHeight() / 3),
+	const char* string = "Game Over";
+
+	size_t length = strlen(string);
+	Renderer::Get().Submit(string,
+		Vector2(Engine::Get().GetWidth() / 2 - static_cast<int>(length) / 2, Engine::Get().GetHeight() / 3),
 		Color::White);
 
 	GameManager::Get().ShowEndScore();

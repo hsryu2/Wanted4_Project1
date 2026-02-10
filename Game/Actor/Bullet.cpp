@@ -58,6 +58,7 @@ void Bullet::Tick(float deltaTime)
 
 void Bullet::SetDirection()
 {
+	// 방향 설정
 	if (DirX == 0 && DirY == 0)
 	{
 		if (direction == 1) // 대각선 모드일 때
@@ -65,7 +66,9 @@ void Bullet::SetDirection()
 			// 1. 가로 방향(DirX) 결정
 			if (position.x <= 0) DirX = 1;
 			else if (position.x >= Engine::Get().GetWidth() - 2) DirX = -1;
-			else DirX = (position.x < Engine::Get().GetWidth() / 2) ? 1 : -1; // 중간쯤이면 가까운 쪽 반대로
+
+			// 중간쯤이면 가까운 쪽 반대로
+			else DirX = (position.x < Engine::Get().GetWidth() / 2) ? 1 : -1; 
 
 			// 2. 세로 방향(DirY) 결정
 			if (position.y <= 0) DirY = 1;

@@ -63,6 +63,7 @@ void Player::Tick(float deltaTime)
 	{
 		MoveDown(deltaTime);
 	}
+	// 아이템 사용 키
 	if (Input::Get().GetKeyDown('Q'))
 	{
 		useItem_Clear(deltaTime);
@@ -76,7 +77,7 @@ void Player::Tick(float deltaTime)
 // Space키를 누른채로 움직이면 느리게
 void Player::MoveRight(float deltaTime)
 {	
-
+	// 오른쪽 이동 처리
 	if (Input::Get().GetKey(VK_SPACE))
 	{
 		xf += SlowMoveSpeed * deltaTime;
@@ -98,7 +99,7 @@ void Player::MoveRight(float deltaTime)
 
 void Player::MoveLeft(float deltaTime)
 {
-
+	// 왼쪽 이동 처리.
 	if (Input::Get().GetKey(VK_SPACE))
 	{
 		xf -= SlowMoveSpeed * deltaTime;
@@ -107,10 +108,7 @@ void Player::MoveLeft(float deltaTime)
 	{
 		xf -= moveSpeed * deltaTime;
 	}
-
-	// 왼쪽 이동 처리.
-	//position.x -= 1;
-
+	
 	// 좌표 검사.
 	if (xf < 0)
 	{
@@ -121,6 +119,7 @@ void Player::MoveLeft(float deltaTime)
 
 void Player::MoveUp(float deltaTime)
 {
+	// 위쪽 이동 처리.
 	if (Input::Get().GetKey(VK_SPACE))
 	{
 		yf -= SlowMoveSpeed * deltaTime;
@@ -129,9 +128,7 @@ void Player::MoveUp(float deltaTime)
 	{
 		yf -= moveSpeed * deltaTime;
 	}
-	// 위쪽 이동 처리.
-	//position.y -= 1;
-
+	
 	if (yf < 0)
 	{
 		yf = 0;
@@ -141,9 +138,7 @@ void Player::MoveUp(float deltaTime)
 
 void Player::MoveDown(float deltaTime)
 {	
-
 	// 아래쪽 이동 처리.
-
 	if (Input::Get().GetKey(VK_SPACE))
 	{
 		yf += SlowMoveSpeed * deltaTime;
@@ -152,7 +147,8 @@ void Player::MoveDown(float deltaTime)
 	{
 		yf += moveSpeed * deltaTime;
 	}
-
+	
+	// 좌표 검사.
 	if (yf >= static_cast<float>(Engine::Get().GetHeight()))
 	{
 		yf -= 1.0f;
@@ -161,7 +157,7 @@ void Player::MoveDown(float deltaTime)
 
 }
 
-
+// Boom 아이템 사용
 void Player::useItem_Clear(float deltaTime)
 {
 	if (ItemCount_Clear <= 0)
@@ -186,6 +182,7 @@ Player& Player::Get()
 	return *instance;
 }
 
+// 무적동안 플레이어 캐릭터 색상 변경
 void Player::SetResistanceColor()
 {	
 	this->color = Color::Magenta;

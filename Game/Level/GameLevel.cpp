@@ -13,7 +13,7 @@
 
 GameLevel::GameLevel()
 {
-	// Player 액터 추가.
+	// 각 액터 추가
 	AddNewActor(new Player());
 
 	AddNewActor(new BulletSpawner());
@@ -27,15 +27,17 @@ GameLevel::~GameLevel()
 	BulletSpawner::Get().ClearPointerListOnly();
 }
 
+// 무적 아이템 획득 시 실행
 void GameLevel::PlayerResistance(float deltaTime)
 {
 	isPlayerResistance = true;
 	timer.Reset();
-	timer.SetTargetTime(3.0f);
+	timer.SetTargetTime(2.0f);
 
 	Player::Get().SetResistanceColor();
 }
 
+// 무적 시간 타이머
 void GameLevel::TickResistance(float deltaTime)
 {
 	if (isPlayerResistance)
@@ -127,6 +129,8 @@ void GameLevel::ProcessCollisionPlayerAndBullet()
 	{
 		if (bullet->TestIntersect(player) && isPlayerResistance == false)
 		{
+			// 플레이어가 탄막 지우기 아이템이 있으면 
+			// 플레이어가 사망하지않고, 아이템 사용으로 대체
 
 			if (Player::Get().ItemCount_Clear > 0)
 			{

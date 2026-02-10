@@ -51,6 +51,7 @@ void PauseLevel::Tick(float deltaTime)
 		currentIndex = (currentIndex + 1) % length;
 	}
 
+	// 일시정지 화면에서 Resume Game을 선택하지 않아도 ESC키로 처리 가능.
 	if (Input::Get().GetKeyDown(VK_ESCAPE))
 	{
 		GameManager::Get().ResumeGame();
