@@ -19,7 +19,7 @@ public:
 private:
 	virtual void Tick(float deltaTime) override;
 
-	float lifeTime = 0.5f; // 0.5초 동안만 존재
+	float lifeTime = 1.0f; // 0.5초 동안만 존재
 	float timer = 0.0f;
 	Vector2 direction;     // 날아갈 방향
 	float speed;

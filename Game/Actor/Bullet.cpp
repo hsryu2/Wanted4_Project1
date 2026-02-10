@@ -3,7 +3,7 @@
 #include "Actor/BulletSpawner.h"
 
 Bullet::Bullet(Vector2& position, float speed,float yPosition, float xPosition, int direction)
-	:super("*", position, Color::Red),
+	:super("o", position, Color::Red),
 			speed(speed), yPosition(static_cast<float>(position.y)),
 			xPosition(static_cast<float>(position.x))
 			

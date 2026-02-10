@@ -4,6 +4,7 @@
 #include "Util/Util.h"
 #include "Render/Renderer.h"
 
+
 #include <iostream>
 #include <Windows.h>
 
@@ -20,6 +21,8 @@ namespace Wanted
 		// 입력 관리자 생성.
 		input = new Input();
 
+
+
 		// 설정 파일 로드.
 		LoadSetting();
 
@@ -28,6 +31,8 @@ namespace Wanted
 
 		// 커서 끄기.
 		Util::TurnOffCursor();
+
+		Util::DisableResizing();
 
 		// 랜덤 종자값 설정.
 		Util::SetRandomSeed();
@@ -96,6 +101,7 @@ namespace Wanted
 			{
 				input->ProcessInput();
 
+				
 				// 프레임 처리.
 				BeginPlay();
 				Tick(deltaTime);
@@ -272,4 +278,5 @@ namespace Wanted
 		// 렌더러에 그리기 명령 전달.
 		renderer->Draw();
 	}
+
 }

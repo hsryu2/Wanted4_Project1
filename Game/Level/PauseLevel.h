@@ -1,25 +1,25 @@
 #pragma once
 #include "Level/Level.h"
 #include "Math/Color.h"
+#include "Level/GameLevel.h"
 #include "Engine/Engine.h"
-#include "GameManager/GameManager.h"
-#include "Core/Input.h"
+
 
 using namespace Wanted;
 
-struct EndMenuItem
+struct PauseMenuItem
 {
 	using OnSelected = void (*)();
 
-	EndMenuItem(const char* text, OnSelected onSelected)
+	PauseMenuItem(const char* text, OnSelected onSelected)
 		: onSelected(onSelected)
 	{
 		length = strlen(text);
-		this->text = new char[length+1];
-		strcpy_s(this->text, length+1, text);
+		this->text = new char[length + 1];
+		strcpy_s(this->text, length + 1, text);
 	}
 
-	~EndMenuItem()
+	~PauseMenuItem()
 	{
 		if (text)
 		{
@@ -33,26 +33,23 @@ struct EndMenuItem
 	OnSelected onSelected = nullptr;
 };
 
-class EndLevel : public Level
+
+class PauseLevel : public Level
 {
-	RTTI_DECLARATIONS(EndLevel, Level)
+	RTTI_DECLARATIONS(PauseLevel, Level)
 
 public:
-	EndLevel();
-	~EndLevel();
+	PauseLevel();
+	~PauseLevel();
 
 private:
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
 
-
 	int currentIndex = 0;
-	std::vector<EndMenuItem*> EMenuItems;
+	std::vector<PauseMenuItem*> PMenuItems;
 
 	Color SelectedColor = Color::Green;
 	Color UnSelectedColor = Color::White;
-
-
-
 };
 

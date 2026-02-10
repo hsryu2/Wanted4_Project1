@@ -17,6 +17,6 @@ int main()
 	//engine.SetNewLevel(new GameLevel());
 	//engine.Run();
 
-	GameManager Game;
-	Game.Run();
+	GameManager game;
+	game.Run();
 }

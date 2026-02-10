@@ -46,7 +46,9 @@ void StartLevel::Tick(float deltaTime)
 	if (Input::Get().GetKeyDown(VK_DOWN))
 	{
 		currentIndex = (currentIndex + 1) % length;
+
 	}
+
 }
 
 void StartLevel::Draw()

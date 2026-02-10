@@ -2,10 +2,12 @@
 #include "Level/GameLevel.h"
 
 Item::Item(Vector2& position, int xPosition, int yPosition,int itemType)
-	: super("I", position), xPosition(position.x), yPosition(position.y)
+	: super("¡Ú", position), xPosition(position.x), yPosition(position.y)
 {	
 	this->ItemType = itemType;
 	
+	sortingOrder = 5;
+
 	SetColor();
 	SetPosition(position);
 }

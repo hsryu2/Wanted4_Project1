@@ -9,7 +9,7 @@ SpecialBullet::SpecialBullet(Vector2& position,
 
 	: Bullet(position, speed, yPosition, xPosition, direction)
 {
-	sortingOrder = 2;
+	sortingOrder = 3;
 
 	Setimage("#");
 	this->color = Color::YELLOW;

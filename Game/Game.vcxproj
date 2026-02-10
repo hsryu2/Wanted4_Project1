@@ -101,6 +101,7 @@
     <ClCompile Include="GameManager\GameManager.cpp" />
     <ClCompile Include="Level\EndLevel.cpp" />
     <ClCompile Include="Level\GameLevel.cpp" />
+    <ClCompile Include="Level\PauseLevel.cpp" />
     <ClCompile Include="Level\StartLevel.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Util\Timer.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="GameManager\GameManager.h" />
     <ClInclude Include="Level\EndLevel.h" />
     <ClInclude Include="Level\GameLevel.h" />
+    <ClInclude Include="Level\PauseLevel.h" />
     <ClInclude Include="Level\StartLevel.h" />
     <ClInclude Include="Util\Timer.h" />
   </ItemGroup>

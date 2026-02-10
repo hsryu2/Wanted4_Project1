@@ -9,6 +9,8 @@ UseItemEffect::UseItemEffect(Vector2 position, float DirX, float DirY, float spd
 	xPosition = position.x;
 	yPosition = position.y;
 
+	sortingOrder = 0;
+
 	SetPosition(position);
 }
 

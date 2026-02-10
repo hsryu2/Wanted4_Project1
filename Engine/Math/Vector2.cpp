@@ -18,8 +18,6 @@ namespace Wanted
 	{
 	}
 
-
-	
 	Vector2::~Vector2()
 	{
 		if (string)
@@ -59,21 +57,6 @@ namespace Wanted
 	{
 		return (x == other.x) && (y == other.y);
 	}
-	// floatÇü
-	//Vector2 Vector2::operator+(const Vector2& other) const
-	//{
-	//	return Vector2(xf + other.xf, yf + other.yf);
-	//}
-
-	//Vector2 Vector2::operator-(const Vector2& other) const
-	//{
-	//	return Vector2(xf - other.xf, yf - other.yf);
-	//}
-
-	//bool Vector2::operator==(const Vector2& other) const
-	//{
-	//	return (xf == other.xf) && (yf == other.yf);
-	//}
 
 	bool Vector2::operator!=(const Vector2& other) const
 	{
@@ -89,12 +72,5 @@ namespace Wanted
 		return coord;
 	}
 
-	//Vector2::operator COORD() const
-	//{
-	//	COORD coord = {};
-	//	coord.X = static_cast<short>(xf);
-	//	coord.Y = static_cast<short>(yf);
-	//
-	//	return coord;
-	//}
+
 }

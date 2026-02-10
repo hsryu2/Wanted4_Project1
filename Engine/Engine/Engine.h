@@ -64,6 +64,8 @@ namespace Wanted
 		// 그리기 함수. (Draw/Render).
 		void Draw();
 
+		void DisableResizing();
+
 	protected:
 		// 엔진 종료 플래그.
 		bool isQuit = false;
@@ -76,6 +78,7 @@ namespace Wanted
 
 		// 렌더러 객체.
 		Renderer* renderer = nullptr;
+
 
 		// 메인 레벨.
 		class Level* mainLevel = nullptr;

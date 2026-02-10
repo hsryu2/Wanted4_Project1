@@ -37,8 +37,8 @@ void Player::Tick(float deltaTime)
 	// 종료 처리.
 	if (Input::Get().GetKeyDown(VK_ESCAPE))
 	{
-		// 게임 종료.
-		QuitGame();
+		// 게임 정지
+		GameManager::Get().PauseGame();
 	}
 
 	// 경과 시간 업데이트.

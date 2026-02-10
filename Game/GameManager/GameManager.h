@@ -4,6 +4,7 @@
 #include "Level/StartLevel.h"
 #include "Level/EndLevel.h"
 #include "Level/Level.h"
+#include "Level/PauseLevel.h"
 
 using namespace Wanted;
 
@@ -12,6 +13,7 @@ enum class State
 	GamePlay = 0,
 	GameStart = 1,
 	Restart = 2,
+	Pause = 3,
 	Length
 };
 
@@ -26,6 +28,9 @@ public:
 	void StartGame();
 	void EndGame();
 	void Restart();
+	void PauseGame();
+	void ResumeGame();
+
 
 	void Score(float deltaTime);
 	void ShowScore();
@@ -54,6 +59,8 @@ private:
 
 	// 아이템 문자열.
 	char itemString[32] = {};
+
+	size_t stringSize = strlen(scoreString);
 
 	static GameManager* instance;
 };

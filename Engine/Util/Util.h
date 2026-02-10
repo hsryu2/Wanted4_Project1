@@ -9,6 +9,29 @@ using namespace Wanted;
 // 헬퍼(Helper) 기능 제공.
 namespace Util
 {
+	inline void DisableResizing()
+	{
+		
+		HWND hWnd = GetConsoleWindow(); // 현재 실행 중인 콘솔창 핸들 가져오기
+		if (hWnd != NULL)
+		{
+			// 1. 현재 스타일 가져오기
+			long style = GetWindowLong(hWnd, GWL_STYLE);
+
+			// 2. 크기 조절(SIZEBOX)과 최대화(MAXIMIZEBOX) 비트 끄기
+			style = style & ~WS_SIZEBOX;
+			style = style & ~WS_MAXIMIZEBOX;
+
+			// 3. 수정된 스타일 적용
+			SetWindowLong(hWnd, GWL_STYLE, style);
+
+			// 4. 스타일 변경사항을 윈도우 프레임에 즉시 반영
+			SetWindowPos(hWnd, NULL, 0, 0, 0, 0,
+				SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+		}
+		
+	}
+	
 	// 콘솔 커서 위치 이동(설정)하는 함수.
 	inline void SetConsolePosition(const Vector2& position)
 	{

@@ -19,7 +19,7 @@ public:
 	void SetResistanceColor();
 	void SetOriginalColor();
 
-	int ItemCount_Clear = 5;
+	int ItemCount_Clear = 1;
 
 private:
 	virtual void Tick(float deltaTime) override;
@@ -51,7 +51,6 @@ private:
 	float SlowMoveSpeed = 20.0f;
 
 	float xf = 0.0f;
-
 	float yf = 0.0f;
 
 	static Player* instance;
